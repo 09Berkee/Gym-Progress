@@ -102,7 +102,13 @@ body {
 
 /* WEEKLY PROGRAM */
 .weekly-program-section { width: 100%; display: flex; flex-direction: column; gap: 16px; }
-.program-header-row h2 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; color: #fff; }
+.weekly-program-section > h2 { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; color: #fff; }
+
+/* AÇILIP KAPANABİLİR BÖLÜM BAŞLIKLARI (masaüstünde sade başlık, mobilde dokunulabilir akordeon) */
+.stats-section-wrap { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+.section-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; padding: 0; margin: 0; color: #fff; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px; font-family: inherit; cursor: default; text-align: left; }
+.toggle-chevron { display: none; color: var(--accent-orange); font-size: 0.85rem; transition: transform 0.2s ease; }
+.collapsible-content { overflow: visible; }
 .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; width: 100%; }
 .day-card { background-color: var(--card-bg); border: 1px solid var(--border-muted); border-radius: 12px; padding: 16px 4px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; transition: all 0.2s ease; text-align: center; min-height: 160px; }
 .day-card:active { transform: scale(0.96); }
@@ -184,6 +190,7 @@ body {
 .workout-inline-input:focus { border-color: var(--accent-orange); }
 .workout-inline-input.kg-input { width: 80px; color: #ff9d42; }
 .stats-divider { color: var(--text-muted); font-weight: 500; font-size: 0.9rem; }
+.stats-multiply { color: var(--accent-orange); font-size: 1.1rem; padding: 0 4px; font-weight: 700; }
 
 /* AUTOCOMPLETE & FORMS */
 .autocomplete-wrapper { position: relative; display: flex; flex-direction: column; gap: 4px; }
@@ -220,23 +227,23 @@ input:focus, select:focus { border-color: var(--accent-orange); }
 
 .global-legal-footer { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 40px; padding-top: 20px; padding-bottom: 20px; border-top: 1px dashed var(--border-muted); line-height: 1.5; }
 
-/* RESPONSIVE DIKEY MOD - ANDROID/iOS NATIVE APP HİSSİYATI */
+/* RESPONSIVE DIKEY MOD - KOMPAKT, TEK EKRANA SIĞAN NATIVE APP HİSSİYATI */
 @media screen and (max-width: 768px) {
     .dashboard-container { flex-direction: column; }
 
     /* ÜST BAR: yapışkan (sticky), sadece logo/profil ikonu içerir. Menü aşağıya, sabit alt bara taşınır. */
     .sidebar {
         width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-muted);
-        padding: 14px env(safe-area-inset-right) 14px calc(16px + env(safe-area-inset-left));
+        padding: 10px env(safe-area-inset-right) 10px calc(14px + env(safe-area-inset-left));
         flex-direction: row; justify-content: flex-start; align-items: center;
         position: sticky; top: 0; z-index: 600;
         box-shadow: 0 4px 14px rgba(0,0,0,0.25);
     }
     .sidebar-top { width: 100%; display: flex; align-items: center; }
-    .logo-area { margin-bottom: 0; gap: 10px; }
+    .logo-area { margin-bottom: 0; gap: 8px; }
     .logo-area img.logo-img { display: none; } /* Mobilde marka görseli yerine ikon+wordmark kullanılır */
-    .logo-area h2 { font-size: 1.05rem; }
-    .nav-item.mobile-profile-shortcut { display: flex; }
+    .logo-area h2 { font-size: 0.98rem; }
+    .nav-item.mobile-profile-shortcut { display: flex; width: 34px; height: 34px; }
 
     .user-profile-badge { display: none; } /* Mobilde alandan tasarruf */
 
@@ -246,52 +253,85 @@ input:focus, select:focus { border-color: var(--accent-orange); }
         flex-direction: row; gap: 0; flex-wrap: nowrap; justify-content: space-around;
         background-color: var(--sidebar-bg);
         border-top: 1px solid var(--border-muted);
-        padding: 8px env(safe-area-inset-right) calc(8px + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+        padding: 6px env(safe-area-inset-right) calc(6px + env(safe-area-inset-bottom)) env(safe-area-inset-left);
         z-index: 700;
         box-shadow: 0 -4px 14px rgba(0,0,0,0.3);
     }
     .nav-item {
         flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 2px; padding: 6px 2px; border-radius: 10px; text-align: center;
-        font-size: 0.68rem; line-height: 1.25; border: 1px solid transparent;
+        gap: 1px; padding: 5px 2px; border-radius: 10px; text-align: center;
+        font-size: 0.64rem; line-height: 1.2; border: 1px solid transparent;
     }
     .nav-item.active { border: none; background-color: rgba(249, 115, 22, 0.1); color: var(--accent-orange); }
 
-    /* İÇERİK: sabit alt bar altında kalmasın diye boşluk bırakılır */
-    .main-dashboard { padding: 16px 16px calc(90px + env(safe-area-inset-bottom)) 16px; -webkit-overflow-scrolling: touch; }
+    /* İÇERİK: sıkı boşluklar + sabit alt bar altında kalmasın diye pay bırakılır */
+    .main-dashboard { padding: 8px 12px calc(52px + env(safe-area-inset-bottom)) 12px; -webkit-overflow-scrolling: touch; }
+    .tab-content { gap: 8px; }
+    .dashboard-header h1 { font-size: 1.1rem; margin-bottom: 1px; }
+    .dashboard-header p { font-size: 0.75rem; line-height: 1.25; }
 
-    /* İSTATİSTİK KARTLARI: yatay kaydırmalı tek satır (native app tarzı) */
-    .stats-grid {
-        display: flex; flex-wrap: nowrap; gap: 10px;
-        overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px;
-        -webkit-overflow-scrolling: touch;
-    }
-    .stats-grid::-webkit-scrollbar { height: 4px; }
-    .stats-grid::-webkit-scrollbar-thumb { background: var(--accent-orange); border-radius: 10px; }
-    .stat-card { flex: 0 0 auto; width: 155px; scroll-snap-align: start; padding: 14px; gap: 10px; }
-    .stat-value { font-size: 1.15rem; }
+    /* AÇILIP KAPANABİLİR BAŞLIKLAR: dokunulabilir, ok simgesi görünür, tıklayınca içerik açılır/kapanır */
+    .stats-section-wrap { gap: 6px; }
+    .section-toggle { cursor: pointer; font-size: 0.9rem; padding: 2px 2px; -webkit-tap-highlight-color: transparent; }
+    .section-toggle:active { opacity: 0.7; }
+    .toggle-chevron { display: inline-block; }
+    .section-toggle.collapsed .toggle-chevron { transform: rotate(-90deg); }
+    .collapsible-content { overflow: hidden; max-height: 600px; transition: max-height 0.25s ease, opacity 0.2s ease; opacity: 1; }
+    .collapsible-content.collapsed { max-height: 0; opacity: 0; pointer-events: none; }
 
-    .progress-alert-text { text-align: center; margin-top: 10px; margin-bottom: 10px; font-size: 0.75rem; }
-    .days-grid {
-        display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-    }
-    .day-card { flex: 0 0 calc((100% - 24px) / 4); min-height: 110px; padding: 10px 4px; } /* 4'lü satır, alttaki eksik satır ortalanır */
-    .day-title { font-size: 0.8rem; }
-    .day-routine { font-size: 0.6rem; min-height: 24px; }
-    .status-badge-btn { font-size: 0.65rem; padding: 4px 2px; }
+    /* İSTATİSTİK KARTLARI: yatay kaydırma YOK, sıkı 2x2 ızgara */
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; margin-top: 6px; }
+    .stat-card { padding: 9px 10px; gap: 8px; border-radius: 13px; }
+    .stat-icon { width: 32px; height: 32px; font-size: 1rem; border-radius: 9px; }
+    .stat-title { font-size: 0.66rem; margin-bottom: 1px; }
+    .stat-value { font-size: 0.98rem; }
+    .stat-value small { font-size: 0.68rem; }
+    .stat-sub { font-size: 0.62rem; margin-top: 1px; }
 
-    .add-exercise-box { grid-template-columns: 1fr; gap: 10px; padding: 12px; }
-    .chart-container { height: 250px; padding: 10px; }
+    .progress-alert-text { display: none; } /* Yer kazanmak için mobilde gizli; masaüstünde görünür kalır */
+
+    /* HAFTALIK PLAN: sıkı 4'lü ızgara, alttaki eksik satır ortalanır */
+    .weekly-program-section { gap: 6px; }
+    .weekly-program-section .collapsible-content { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+    .days-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+    .day-card { flex: 0 0 calc((100% - 18px) / 4); min-height: 84px; padding: 7px 3px; gap: 5px; }
+    .day-title { font-size: 0.7rem; }
+    .day-routine { font-size: 0.53rem; min-height: 16px; }
+    .day-status-icon svg { width: 16px; height: 16px; }
+    .status-badge-btn { font-size: 0.56rem; padding: 3px 2px; }
+    .btn-save-week { padding: 9px; font-size: 0.82rem; margin-top: 0; }
+
+    /* ANTRENMAN DETAY PANELİ: en önemli bölüm, HER ZAMAN tam görünür, iç kaydırma YOK */
+    .workout-detail-section { padding: 12px; gap: 7px; }
+    .workout-detail-section h3 { font-size: 0.92rem; }
+    .workout-title-area { padding-bottom: 7px; }
+    .workout-title-area span { font-size: 0.66rem; padding: 3px 8px; }
+    .workout-actions { gap: 6px; }
+    .btn-action { padding: 4px 8px; font-size: 0.66rem; }
+
+    /* EGZERSİZ LİSTESİ: artık kendi içinde KAYDIRMIYOR, doğal akışta tam görünür; sadece aradaki boşluklar sıkılaştırıldı */
+    .exercise-list { gap: 5px; }
+    .exercise-item { flex-direction: column; align-items: flex-start; padding: 7px; gap: 6px; }
+    .exercise-info { width: 100%; }
+    .exercise-info-text h4 { font-size: 0.86rem; }
+    .exercise-meta-row { font-size: 0.7rem; }
+    .prev-stat { font-size: 0.64rem; margin-top: 1px; }
+    .exercise-stats-inputs { width: 100%; justify-content: flex-start; background-color: #050b18; padding: 6px 7px; border-radius: 8px; gap: 6px; flex-wrap: nowrap; overflow: visible; }
+    .workout-inline-input { width: 42px; padding: 5px 2px; font-size: 0.72rem; flex-shrink: 0; }
+    .workout-inline-input.kg-input { width: 48px; }
+    .stats-divider { font-size: 0.62rem; white-space: nowrap; }
+    .stats-multiply { font-size: 0.8rem; padding: 0 1px; }
+
+    /* HAREKET EKLEME FORMU: 5 satır yerine 3 satıra sığdırılmış kompakt ızgara */
+    .add-exercise-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; padding: 9px; }
+    .add-exercise-box .autocomplete-wrapper { grid-column: 1 / -1; }
+    .add-exercise-box label { font-size: 0.63rem; margin-bottom: 1px; }
+    .add-exercise-box input { padding: 7px; font-size: 0.82rem; }
+    #btn-add-exercise { grid-column: 1 / -1; height: 34px; font-size: 0.76rem; }
+
+    .chart-container { height: 220px; padding: 10px; }
     .filter-controls { flex-wrap: wrap; justify-content: center; gap: 6px; }
     .filter-btn { padding: 6px 12px; font-size: 0.75rem; }
-
-    .workout-title-area { flex-direction: column; gap: 12px; align-items: stretch; }
-    .workout-actions { width: 100%; justify-content: space-between; }
-    .exercise-item { flex-direction: column; align-items: flex-start; padding: 12px; gap: 12px; }
-    .exercise-info { width: 100%; }
-    .exercise-stats-inputs { width: 100%; justify-content: space-between; background-color: #050b18; padding: 8px; border-radius: 8px; }
-    .workout-inline-input { width: 65px; padding: 6px; font-size: 0.85rem; }
-    .workout-inline-input.kg-input { width: 75px; }
 
     .archive-layout { flex-direction: column; gap: 16px; }
     .archive-sidebar-list { width: 100%; max-height: 200px; }
@@ -299,8 +339,10 @@ input:focus, select:focus { border-color: var(--accent-orange); }
 
 /* ÇOK KÜÇÜK EKRANLAR (dar Android telefonlar) İÇİN EK İNCELTME */
 @media screen and (max-width: 380px) {
-    .stat-card { width: 138px; padding: 12px; }
-    .nav-item { font-size: 0.62rem; }
-    .days-grid { gap: 6px; }
-    .day-card { flex-basis: calc((100% - 18px) / 4); min-height: 100px; }
+    .stat-card { padding: 9px; gap: 7px; }
+    .stat-icon { width: 32px; height: 32px; font-size: 1rem; }
+    .nav-item { font-size: 0.58rem; }
+    .days-grid { gap: 5px; }
+    .day-card { flex-basis: calc((100% - 15px) / 4); min-height: 82px; padding: 6px 2px; }
+    .exercise-list { max-height: 210px; }
 }
